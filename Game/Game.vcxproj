@@ -157,6 +157,12 @@
   <ItemGroup>
     <ClCompile Include="Origem.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Menu_Principal.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Assets\image\background.png" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

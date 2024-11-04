@@ -4,11 +4,11 @@
 #include <SFML/System.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
-
+#include "Menu_Principal.h"
 using namespace std;
 using namespace sf;
 
-void tela_inicial() {
+/*void tela_inicial() {
     RenderWindow window(VideoMode(800, 600), "Renaissance Lords", Style::Close | Style::Titlebar);
     Image icon;
 
@@ -49,10 +49,32 @@ void tela_inicial() {
         window.draw(titulo);
         window.display();
     }
-}
+}*/
 
 int main() {
-    tela_inicial();
-
+    RenderWindow window(VideoMode(800, 600), "Renaissance Lords", Style::Close | Style::Titlebar);
+    int opc_select = 0;
+    while (window.isOpen()) {
+        Event event;
+        while (window.pollEvent(event)) {
+            if (event.type == Event::Closed) {
+                window.close();
+            }
+            if (event.type == Event::KeyPressed) {
+                if (event.key.code == Keyboard::Up) {
+                    opc_select = (opc_select - 1 + MENU_MAX_OPC) % MENU_MAX_OPC;
+                }
+                if (event.key.code == Keyboard::Down) {
+                    opc_select = (opc_select + 1) % MENU_MAX_OPC;
+                }
+            }
+        }
+        
+        window.clear();
+        menu_inicial(window,opc_select);
+        window.display(); 
+        
+    }
+    
     return 0;
 }
