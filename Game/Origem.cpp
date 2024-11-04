@@ -1,5 +1,4 @@
 #include <iostream>
-#include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/System.hpp>
 #include <SFML/Audio.hpp>
@@ -8,71 +7,75 @@
 using namespace std;
 using namespace sf;
 
-/*void tela_inicial() {
+
+
+int main() {
     RenderWindow window(VideoMode(800, 600), "Renaissance Lords", Style::Close | Style::Titlebar);
     Image icon;
-
-    if (!icon.loadFromFile("D:/dujsc/icon.png")) {
+    if (!icon.loadFromFile("Assets/image/icon.png")) {
         cerr << "Erro ao carregar icon!" << endl;
     }
 
     window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
     Texture background;
-
-    if (!background.loadFromFile("D:/dujsc/background.png")) {
-        cerr << "Erro ao carregar a imagem de background!" << endl;
-
-    }
-    Font fonte;
-
-    if (!fonte.loadFromFile("C:/Users/dujsc/AppData/Local/Microsoft/Windows/Fonts/GothicPixels.ttf")) {
-        cerr << "Erro ao carregar fonte!" << endl;
-    }
-
-    Text titulo("Renaissance Lords", fonte);
-    titulo.setCharacterSize(30);
-    titulo.setStyle(titulo.Regular);
-    titulo.setFillColor(Color::Blue);
-    Sprite backgroundSprite;
-    backgroundSprite.setTexture(background);
-
-
-    while (window.isOpen()) {
-        Event event;
-        while (window.pollEvent(event)) {
-            if (event.type == Event::Closed) {
-                window.close();
-            }
-        }
-        window.clear();
-        window.draw(backgroundSprite);
-        window.draw(titulo);
-        window.display();
-    }
-}*/
-
-int main() {
-    RenderWindow window(VideoMode(800, 600), "Renaissance Lords", Style::Close | Style::Titlebar);
     int opc_select = 0;
+    int sair_opc = 0;
+    bool tela_saida = false;
+
     while (window.isOpen()) {
         Event event;
+
         while (window.pollEvent(event)) {
             if (event.type == Event::Closed) {
                 window.close();
             }
             if (event.type == Event::KeyPressed) {
-                if (event.key.code == Keyboard::Up) {
-                    opc_select = (opc_select - 1 + MENU_MAX_OPC) % MENU_MAX_OPC;
-                }
-                if (event.key.code == Keyboard::Down) {
-                    opc_select = (opc_select + 1) % MENU_MAX_OPC;
+                if (tela_saida) {
+                    switch (event.key.code) {
+                    case Keyboard::Left:
+                        sair_opc = (sair_opc - 1 + CONFIRM_MAX_OPC) % CONFIRM_MAX_OPC; break;
+                    case Keyboard::Right:
+                        sair_opc = (sair_opc + 1) % CONFIRM_MAX_OPC; break;
+                    case Keyboard::Enter:
+                        if (sair_opc == CONFIRM_MAX_OPC - 2) {
+                            window.close();
+                        }
+                        else {
+                            tela_saida = false;
+                        }
+                        break;
+                    }
+                } else {
+                    switch (event.key.code) {
+                    case Keyboard::Up:
+                        opc_select = (opc_select - 1 + MENU_MAX_OPC) % MENU_MAX_OPC;
+                        break;
+                    case Keyboard::Down:
+                        opc_select = (opc_select + 1) % MENU_MAX_OPC;
+                        break;
+                    case Keyboard::Enter:
+                        if (opc_select == MENU_MAX_OPC - 1) {
+                            tela_saida = true;
+                        }
+                        break;
+                    case Keyboard::Escape:
+                        tela_saida = true;
+
+                    }
                 }
             }
         }
         
-        window.clear();
-        menu_inicial(window,opc_select);
+        if (tela_saida) {
+            confirma_saida(window, sair_opc);
+        }
+        else {
+            window.clear();
+            menu_inicial(window, opc_select);
+        }
+        
         window.display(); 
+        
         
     }
     
