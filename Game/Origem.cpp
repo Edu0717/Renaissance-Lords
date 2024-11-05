@@ -17,10 +17,11 @@ int main() {
     }
 
     window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
-    Texture background;
+    
     int opc_select = 0;
     int sair_opc = 0;
     bool tela_saida = false;
+    bool creditos = false;
 
     while (window.isOpen()) {
         Event event;
@@ -44,6 +45,7 @@ int main() {
                             tela_saida = false;
                         }
                         break;
+                        
                     }
                 } else {
                     switch (event.key.code) {
@@ -54,14 +56,26 @@ int main() {
                         opc_select = (opc_select + 1) % MENU_MAX_OPC;
                         break;
                     case Keyboard::Enter:
+                       
                         if (opc_select == MENU_MAX_OPC - 1) {
                             tela_saida = true;
                         }
+                        else if (opc_select == MENU_MAX_OPC - 2) {
+                            creditos = true;
+                        }
                         break;
                     case Keyboard::Escape:
-                        tela_saida = true;
-
+                        if (creditos) {
+                            creditos = false;
+                            
+                        }
+                        else {
+                            tela_saida = true;
+                        }
+                        
+                        break;
                     }
+                    
                 }
             }
         }
@@ -71,12 +85,16 @@ int main() {
         }
         else {
             window.clear();
-            menu_inicial(window, opc_select);
+            if (creditos) {
+                
+                creditos_menu(window, opc_select);
+            }
+            else {
+               
+                menu_inicial(window, opc_select);
+            }
         }
-        
-        window.display(); 
-        
-        
+        window.display();
     }
     
     return 0;

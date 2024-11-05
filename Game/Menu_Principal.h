@@ -17,11 +17,21 @@ void menu_inicial(RenderWindow& window_menu,int opc_select) {
 	Color cor_opc(22, 8, 2);
 	Texture tmenu_select;
 	Sprite smenu_select;
+	Texture ttitulo;
+	Sprite stitulo;
 	
+	if (!ttitulo.loadFromFile("Assets/image/Titulo.png")) {
+		cerr << "Erro ao carregar fonte!" << endl;
+	}
+	stitulo.setTexture(ttitulo);
+	stitulo.setScale(0.35f, 0.35f);
+	stitulo.setPosition(30.0f, 90.0f);
+
 	if (!background_tmenu.loadFromFile("Assets/image/background.png")) {
 		cerr << "Erro ao carregar fonte!" << endl;
 	}
 	background_smenu.setTexture(background_tmenu);
+	
 
 	if (!tmenu_select.loadFromFile("Assets/image/livro.png")) {
 		cerr << "Erro ao carregar indicador do menu!" << endl;
@@ -35,10 +45,10 @@ void menu_inicial(RenderWindow& window_menu,int opc_select) {
 		cerr << "Erro ao carregar fonte!" << endl;
 	}
 	window_menu.draw(background_smenu);
-	
+	window_menu.draw(stitulo);
 
 	if (opc_select >= 0 && opc_select < MENU_MAX_OPC) {
-		smenu_select.setPosition(15, 236 + (opc_select * 70)); // Posição ao lado da opção
+		smenu_select.setPosition(15.0f, 236.0f + (opc_select * 70.0f)); // Posição ao lado da opção
 		window_menu.draw(smenu_select);
 	}
 	
@@ -47,7 +57,7 @@ void menu_inicial(RenderWindow& window_menu,int opc_select) {
 		opc_menu[i].setFont(fonte_menu);
 		opc_menu[i].setFillColor(cor_opc);
 		opc_menu[i].setCharacterSize(45);
-		opc_menu[i].setPosition(72, 230 + (i * 70));
+		opc_menu[i].setPosition(72.0f, 230.0f + (i * 70.0f));
 		
 		switch (i) {
 		case 0: opc_menu[i].setString("Jogar"); break;
@@ -74,7 +84,7 @@ void confirma_saida(RenderWindow& window_menu, int sair_opc) {
 		cerr << "Erro ao carregar tela de confirmação!" << endl;
 	}
 	sconfirm_tela.setTexture(tconfirm_tela);
-	sconfirm_tela.setPosition(225, 225);
+	sconfirm_tela.setPosition(225.0f, 225.0f);
 	window_menu.draw(sconfirm_tela);
 
 	if (!fonte_confirm.loadFromFile("Assets/fonts/GothicPixels.ttf")) {
@@ -85,14 +95,14 @@ void confirma_saida(RenderWindow& window_menu, int sair_opc) {
 	titulo_confirm.setString("Voce tem certeza?");
 	titulo_confirm.setFillColor(confirm_color_opc);
 	titulo_confirm.setCharacterSize(32);
-	titulo_confirm.setPosition(250, 245);
+	titulo_confirm.setPosition(250.0f, 245.0f);
 	window_menu.draw(titulo_confirm);
 	
 	for (int i = 0; i < CONFIRM_MAX_OPC; i++) {
 		opc_confirm[i].setFont(fonte_confirm);
 		opc_confirm[i].setFillColor(confirm_color_opc);
 		opc_confirm[i].setCharacterSize(36);
-		opc_confirm[i].setPosition(300 + (i * 125), 300.0);
+		opc_confirm[i].setPosition(300.0f + (i * 125.0f), 300.0f);
 		switch (i) {
 		case 0: opc_confirm[i].setString("Sim"); break;
 		case 1: opc_confirm[i].setString("Nao"); break;
@@ -108,14 +118,61 @@ void confirma_saida(RenderWindow& window_menu, int sair_opc) {
 	sconfirm_select.setScale(0.09f, 0.09f);
 
 	if (sair_opc >= 0 && sair_opc < CONFIRM_MAX_OPC) {
-		sconfirm_select.setPosition(250 + (sair_opc * 125), 300); // Posição ao lado da opção
+		sconfirm_select.setPosition(250.0f + (sair_opc * 125.0f), 300.0f); // Posição ao lado da opção
 		window_menu.draw(sconfirm_select);
 	}
 
 }
 
-void creditos_menu(RenderWindow& window_menu) {
+void creditos_menu(RenderWindow& window_menu, int opc_credit_select) {
+	Texture tbackground_creditos;
+	Sprite sbackground_creditos;
+	Texture ttitulo;
+	Sprite stitulo;
+	Font creditos;
 
 
+	Text text_creditos("teste",creditos,30);
+	text_creditos.setFillColor(Color::Black);
+	
+
+	if (!tbackground_creditos.loadFromFile("Assets/image/background.png")) {
+		cerr << "Erro ao carregar fonte!" << endl;
+	}
+	sbackground_creditos.setTexture(tbackground_creditos);
+
+	if (!ttitulo.loadFromFile("Assets/image/Titulo.png")) {
+		cerr << "Erro ao carregar fonte!" << endl;
+	}
+	stitulo.setTexture(ttitulo);
+	stitulo.setScale(0.35f, 0.35f);
+	stitulo.setPosition(30.0f, 90.0f);
+	if (!creditos.loadFromFile("Assets/fonts/GothicPixels.ttf")) {
+		cerr << "Erro ao carregar fonte!" << endl;
+	}
+	window_menu.draw(sbackground_creditos);
+	window_menu.draw(stitulo);
+
+	
+	static Clock clock;
+	float deltaTime = clock.restart().asSeconds();
+	
+	
+	if (text_creditos.getPosition().y == 0) {
+		text_creditos.setPosition(200, window_menu.getSize().y);
+	}
+
+	
+	text_creditos.move(0, -50.0f * deltaTime);
+
+	
+	if (text_creditos.getPosition().y + text_creditos.getGlobalBounds().height < 0) {
+		text_creditos.setPosition(200, window_menu.getSize().y);
+	}
+
+	window_menu.draw(text_creditos);
+
+	
 }
+	
 
