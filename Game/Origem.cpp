@@ -11,6 +11,7 @@ using namespace sf;
 
 int main() {
     RenderWindow window(VideoMode(800, 600), "Renaissance Lords", Style::Close | Style::Titlebar);
+    window.setFramerateLimit(60);
     Image icon;
     if (!icon.loadFromFile("Assets/image/icon.png")) {
         cerr << "Erro ao carregar icon!" << endl;
@@ -22,6 +23,7 @@ int main() {
     int sair_opc = 0;
     bool tela_saida = false;
     bool creditos = false;
+    bool como_jogar = false;
 
     while (window.isOpen()) {
         Event event;
@@ -86,7 +88,7 @@ int main() {
         else {
             window.clear();
             if (creditos) {
-                
+              
                 creditos_menu(window, opc_select);
             }
             else {

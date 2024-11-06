@@ -1,7 +1,8 @@
 #pragma once
 #include <iostream>
 #include <SFML/Graphics.hpp>
-
+#include <string>
+#include <vector>
 using namespace sf;
 using namespace std;
 
@@ -20,12 +21,12 @@ void menu_inicial(RenderWindow& window_menu,int opc_select) {
 	Texture ttitulo;
 	Sprite stitulo;
 	
-	if (!ttitulo.loadFromFile("Assets/image/Titulo.png")) {
+	if (!ttitulo.loadFromFile("Assets/image/titulo.png")) {
 		cerr << "Erro ao carregar fonte!" << endl;
 	}
 	stitulo.setTexture(ttitulo);
 	stitulo.setScale(0.35f, 0.35f);
-	stitulo.setPosition(30.0f, 90.0f);
+	stitulo.setPosition(30.0f, 75.0f);
 
 	if (!background_tmenu.loadFromFile("Assets/image/background.png")) {
 		cerr << "Erro ao carregar fonte!" << endl;
@@ -57,7 +58,7 @@ void menu_inicial(RenderWindow& window_menu,int opc_select) {
 		opc_menu[i].setFont(fonte_menu);
 		opc_menu[i].setFillColor(cor_opc);
 		opc_menu[i].setCharacterSize(45);
-		opc_menu[i].setPosition(72.0f, 230.0f + (i * 70.0f));
+		opc_menu[i].setPosition(70.0f, 230.0f + (i * 70.0f));
 		
 		switch (i) {
 		case 0: opc_menu[i].setString("Jogar"); break;
@@ -125,54 +126,69 @@ void confirma_saida(RenderWindow& window_menu, int sair_opc) {
 }
 
 void creditos_menu(RenderWindow& window_menu, int opc_credit_select) {
-	Texture tbackground_creditos;
-	Sprite sbackground_creditos;
-	Texture ttitulo;
-	Sprite stitulo;
-	Font creditos;
+	 Texture tbackground_creditos;
+	 Sprite sbackground_creditos;
+	 Texture ttitulo;
+	 Sprite stitulo;
+	 Font font;
+	 Text text_creditos;
+	 Texture tlogoUnifan;
+	 Sprite slogoUnifan;
 
-
-	Text text_creditos("teste",creditos,30);
-	text_creditos.setFillColor(Color::Black);
-	
+	if (!font.loadFromFile("Assets/fonts/Ancient Modern Tales.otf")) {
+		cerr << "Erro ao carregar fonte!" << endl;
+	}
 
 	if (!tbackground_creditos.loadFromFile("Assets/image/background.png")) {
-		cerr << "Erro ao carregar fonte!" << endl;
+		cerr << "Erro ao carregar fundo!" << endl;
 	}
 	sbackground_creditos.setTexture(tbackground_creditos);
 
-	if (!ttitulo.loadFromFile("Assets/image/Titulo.png")) {
-		cerr << "Erro ao carregar fonte!" << endl;
+	if (!ttitulo.loadFromFile("Assets/image/titulo.png")) {
+		cerr << "Erro ao carregar título!" << endl;
+	}
+	if (!tlogoUnifan.loadFromFile("Assets/image/unifan_logo.png")) {
+		cerr << "Erro ao carregar título!" << endl;
 	}
 	stitulo.setTexture(ttitulo);
 	stitulo.setScale(0.35f, 0.35f);
-	stitulo.setPosition(30.0f, 90.0f);
-	if (!creditos.loadFromFile("Assets/fonts/GothicPixels.ttf")) {
-		cerr << "Erro ao carregar fonte!" << endl;
-	}
+	stitulo.setPosition(30.0f, 75.0f);
+
+	slogoUnifan.setTexture(tlogoUnifan);
+	slogoUnifan.setPosition(150.0f, 460.0f);
+	slogoUnifan.setScale(0.2f, 0.2f);
+
+	vector<string> list_creditos = {
+		"---------EQUIPE---------",
+		"Victor Gomes - Desenvolvedor",
+		"Mateus Nobre - Roteirista",
+		"Italo Oliveira- Gerente de projeto",
+		"Pedro Henrique O.- Artista",
+		"Eduardo santos - Game Designer",
+		"------ORIENTADOR-------",
+		"Gean Trabuco Lima - Orientador",
+	};
+
+	text_creditos.setFont(font);
+	text_creditos.setFillColor(Color::Black);
+	float posY = 215.0f;
+
 	window_menu.draw(sbackground_creditos);
 	window_menu.draw(stitulo);
+	
 
-	
-	static Clock clock;
-	float deltaTime = clock.restart().asSeconds();
-	
-	
-	if (text_creditos.getPosition().y == 0) {
-		text_creditos.setPosition(200, window_menu.getSize().y);
+	for (const auto& linha : list_creditos) {
+		text_creditos.setString(linha);
+		text_creditos.setPosition(67.0f, posY);
+		posY += 30.0f;
+		window_menu.draw(text_creditos);
 	}
-
-	
-	text_creditos.move(0, -50.0f * deltaTime);
-
-	
-	if (text_creditos.getPosition().y + text_creditos.getGlobalBounds().height < 0) {
-		text_creditos.setPosition(200, window_menu.getSize().y);
-	}
-
-	window_menu.draw(text_creditos);
-
-	
+	window_menu.draw(slogoUnifan);
 }
+
+void como_jogar(RenderWindow& window_menu, int opc_credit_select) {
+
+}
+
 	
 
