@@ -1,0 +1,11 @@
+Bem-vindo ao jogo Renaissance Lords!
+Neste jogo, você enfrentará uma série de perguntas sobre o renacimento e seus artistas.
+O Renascimento (séculos XIV-XVI) foi um movimento que reviveu a arte e o conhecimento da Antiguidade Clássica, destacando figuras como
+Donatelo, Rafael, Leonardo da Vinci e Michelangelo. 
+Esses artistas revolucionaram as artes visuais, promovendo o humanismo e o progresso cultural na Europa.
+---Sobre o Jogo---
+-O jogo possui 4 estagios cada um com 5 perguntas.                           -Cada estagio possui perguntas sobre o renacimento e um dos artistas.
+-O jogador possui 3 vidas.                                                   -O jogador começa com 0 pontos.
+-Errar uma pergunta, perde uma vida.                                         -Acertar uma pergunta ganha pontos.
+-Se perder todas a vidas é Game Over e o estagio é reiniciado.               -Os pontos são duplicados caso acerte todas a 5 perguntas do estagio.
+-Ao final do jogo insira seu nome para saber sua colocação no rank.
